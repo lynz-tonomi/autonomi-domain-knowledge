@@ -1,0 +1,92 @@
+{
+  "name": "autonomi-domain-knowledge",
+  "description": "Deep industry domain knowledge for LynZ — food science, regulatory compliance, supply chain, product development, and financial systems expertise",
+  "version": "1.0.0",
+  "agent": "LynZ",
+  "skills": [
+    {
+      "id": "fb-product-formulation",
+      "name": "F&B Product Formulation",
+      "description": "Beverage formulation science — Brix, pH, water activity, shelf life, ingredient interactions, flavor systems, preservative hurdle technology",
+      "references": [
+        "formulation_science.md",
+        "ingredient_interactions.md",
+        "shelf_life_engineering.md",
+        "flavor_systems.md"
+      ]
+    },
+    {
+      "id": "fb-food-safety-compliance",
+      "name": "Food Safety & Regulatory Compliance",
+      "description": "FSMA, HACCP, SQF, GFSI, FDA 21 CFR, allergen management, PCQI, environmental monitoring, recall procedures",
+      "references": [
+        "haccp_advanced.md",
+        "fsma_regulatory.md",
+        "allergen_management.md",
+        "audit_certification.md"
+      ]
+    },
+    {
+      "id": "fb-supply-chain-v2",
+      "name": "F&B Supply Chain Operations",
+      "description": "Commodity procurement, cold chain logistics, demand planning, supplier qualification, inventory optimization, co-manufacturing",
+      "references": [
+        "commodity_procurement.md",
+        "cold_chain_logistics.md",
+        "demand_planning.md",
+        "supplier_qualification.md"
+      ]
+    },
+    {
+      "id": "fb-product-dev",
+      "name": "F&B Product Development",
+      "description": "Stage-gate NPD, sensory evaluation, scale-up, nutritional labeling, claims substantiation, packaging engineering",
+      "references": [
+        "npd_stage_gate.md",
+        "sensory_evaluation.md",
+        "scale_up_manufacturing.md",
+        "labeling_claims.md"
+      ]
+    },
+    {
+      "id": "qbo-autonomi",
+      "name": "QuickBooks Online Integration",
+      "description": "Chart of accounts for F&B, COGS tracking, inventory valuation, batch costing, tax compliance, QBO API patterns",
+      "references": [
+        "fb_chart_of_accounts.md",
+        "cogs_batch_costing.md",
+        "qbo_api_patterns.md"
+      ]
+    },
+    {
+      "id": "bill-com-autonomi",
+      "name": "Bill.com AP/AR Automation",
+      "description": "Vendor payment workflows, 3-way matching, approval routing, ACH/wire settlement, F&B payment terms, rebate tracking",
+      "references": [
+        "ap_ar_workflows.md",
+        "three_way_matching.md",
+        "payment_settlement.md"
+      ]
+    },
+    {
+      "id": "m365-autonomi",
+      "name": "Microsoft 365 Integration",
+      "description": "SharePoint document control for SOPs/specs, Teams quality alerts, Power Automate compliance workflows, Excel batch records",
+      "references": [
+        "document_control.md",
+        "compliance_workflows.md",
+        "batch_record_templates.md"
+      ]
+    },
+    {
+      "id": "gws-autonomi",
+      "name": "Google Workspace Integration",
+      "description": "Drive document hierarchy for F&B, Sheets formulation calculators, Forms audit checklists, Gmail supplier communications",
+      "references": [
+        "document_hierarchy.md",
+        "formulation_calculators.md",
+        "audit_checklists.md"
+      ]
+    }
+  ]
+}
