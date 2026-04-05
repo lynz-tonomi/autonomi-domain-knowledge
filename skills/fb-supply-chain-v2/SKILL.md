@@ -1,89 +1,54 @@
-# F&B Supply Chain Operations — Domain Knowledge Base v2
+---
+name: fb-supply-chain-v2
+description: >
+  F&B Production & Supply Chain Agent v2 — deep-domain reference for beverage manufacturing (juice, kombucha, oat milk, functional drinks, cold brew). Covers production scheduling, batch management, BOM/formulation, inventory (FEFO, safety stock), procurement, logistics, demand planning, quality, regulatory (FSMA 204), and cost management with numeric thresholds, decision rules, and formulas.
+  ALWAYS trigger on: food/beverage production, brewery, dairy, bakery, CPG, ingredient, recipe, formulation, BOM, batch, lot tracking, shelf life, cold chain, FEFO, allergen, procurement, supplier, vendor, PO, inventory, warehouse, logistics, 3PL, co-packer, production schedule, yield, waste, Brix, pH, HACCP, FSMA, SQF, BRC, GMP, FDA, retort, aseptic, hot-fill, cold brew, kombucha, oat milk, OEE, changeover, CIP, COGS, landed cost, trade spend, OTIF, demand forecast, S&OP, MAPE, batch release, rework, or data with columns like batch_id, lot_number, shelf_life_days, brix, ph, yield_pct, cogs.
+---
 
-## Purpose
+# F&B Production & Supply Chain — Agent Reference v2
 
-This skill provides deep industry knowledge for food and beverage supply chain operations. It is not platform documentation — it encodes the working expertise of supply chain, procurement, logistics, and planning professionals operating in the beverage manufacturing sector (juice, kombucha, functional drinks, oat milk, cold brew, RTD tea/coffee).
+This is a system-level reference document. Load the relevant reference file(s) from `references/` based on the operational domain the user is asking about.
 
-## When to Use
+## Reference File Index
 
-Trigger this skill when the conversation involves any of the following:
+Each reference file is a self-contained deep-domain document with data schemas, decision rules, numeric thresholds, formulas, and failure modes. Read the file(s) matching the user's query before responding.
 
-- **Commodity procurement** — ingredient sourcing, futures markets, forward contracting, supplier negotiations, landed cost modeling, MOQs, payment terms, hedging
-- **Cold chain logistics** — temperature-controlled warehousing, reefer transport, FIFO/FEFO, freight rate analysis, pallet optimization, carrier qualification, last-mile cold chain
-- **Demand planning & forecasting** — S&OP, seasonal patterns, promotion lift, POS data integration, safety stock for perishables, forecast accuracy metrics, co-man capacity booking
-- **Supplier qualification** — approved supplier programs, GFSI audits, COA management, incoming inspection, supplier scorecards, SCAR process, FSMA 204 traceability, allergen controls
+| Domain | File | When to Load |
+|--------|------|-------------|
+| Production scheduling, run sequencing, changeovers, campaign runs, retort/aseptic/cold-brew scheduling | `references/production_scheduling.md` | User asks about schedules, sequencing, changeovers, line utilization, campaign optimization, OEE |
+| Batch management, yield, rework, batch release | `references/batch_management.md` | User asks about batches, yield, rework, hold/release, batch records, deviations |
+| BOM, formulation, density, scaling, substitutions | `references/bom_formulation.md` | User asks about recipes, BOMs, ingredient costs, scaling, Brix blending, allergen matrix |
+| Inventory, FEFO, safety stock, shelf life, cycle counting | `references/inventory_management.md` | User asks about inventory levels, expiring stock, reorder points, lot tracking, warehouse |
+| Procurement, POs, lead times, supplier qualification, COAs | `references/procurement.md` | User asks about purchasing, suppliers, POs, lead times, COAs, supplier scorecards |
+| Logistics, cold chain, OTIF, freight, warehousing, 3PL | `references/logistics_warehousing.md` | User asks about shipping, freight, cold chain, OTIF, warehouse slotting, 3PL |
+| Demand planning, forecasting, S&OP, seasonality, promos | `references/demand_planning.md` | User asks about forecasts, demand, S&OP, seasonality, promotions, MAPE |
+| Quality integration, inspection, in-process checks, holds | `references/quality_integration.md` | User asks about QA/QC, incoming inspection, in-process checks, hold/release, deviations |
+| Regulatory, FSMA 204, traceability, FDA registration | `references/regulatory.md` | User asks about traceability, FSMA, FDA, recalls, CTEs, KDEs, process filing |
+| Cost management, COGS, yield loss costing, landed cost, trade spend | `references/cost_management.md` | User asks about costs, margins, COGS, freight allocation, trade spend, deductions |
+| Appendices: beverage specs, unit conversions, alerting thresholds | `references/appendices.md` | Load alongside any other reference when agent needs specs, conversions, or alert thresholds |
 
-Do NOT use this skill for:
+## How to Use This Skill
 
-- General software questions unrelated to F&B operations
-- Retail or foodservice operations (this covers manufacturing/CPG supply chain)
-- Regulatory deep-dives on labeling or claims (see `fb-food-safety-compliance` skill)
-- Product formulation science (see `fb-product-formulation` skill)
+1. **Identify the domain(s).** Read the user's question and determine which reference file(s) to load. Most questions touch 1-2 domains. Cross-domain questions (e.g., "will this ingredient arrive in time for the production run?") need both procurement and production scheduling references.
 
-## Key Concepts
+2. **Load the reference(s).** Use the Read tool on the appropriate file(s) in `references/`.
 
-### Commodity Procurement
-| Concept | Summary |
-|---|---|
-| FCOJ-A futures | ICE-traded frozen concentrated orange juice contract; benchmark for citrus pricing globally |
-| Sugar #11 | ICE world raw sugar futures; reference price for sweetener procurement |
-| Forward contracting | Locking price and volume 3-12 months ahead to hedge commodity volatility |
-| Landed cost | Total delivered cost: FOB price + freight + insurance + duties + handling + quality hold costs |
-| Organic premiums | Typically 30-80% above conventional depending on ingredient; constrained by certified acreage |
-| Specialty sweetener lead times | Stevia 12-16 wk, monk fruit 16-20 wk (China origin), allulose 8-12 wk |
-| PET resin pricing | Tracks crude oil and paraxylene; contracted quarterly or semi-annually |
+3. **Apply the data schemas.** The reference files define the exact field names, types, units, and ranges the agent should expect in operational data. Use these to validate and interpret user-provided data.
 
-### Cold Chain Logistics
-| Concept | Summary |
-|---|---|
-| Temperature zones | Fresh juice 33-38 deg F / Frozen concentrate -10 deg F / Shelf-stable ambient (heat-sensitive) |
-| Reefer monitoring | Real-time GPS + temp loggers (Sensitech TempTale, Emerson/Testo); download at receiving |
-| FIFO vs FEFO | First-In-First-Out vs First-Expired-First-Out; FEFO is standard for perishable beverage |
-| Pallet Ti x Hi | Cases per layer (Ti) x layers high (Hi); determines pallet cube and truck utilization |
-| Freight modes | FTL (full truckload) for high-volume lanes; LTL (less-than-truckload) for emerging brand volumes |
-| Cross-docking | Product moves through DC without storage; reduces dwell time for perishables |
+4. **Apply the decision rules.** Each reference contains explicit IF/THEN logic with numeric thresholds. Use these rules to generate recommendations, flag problems, and make operational decisions.
 
-### Demand Planning
-| Concept | Summary |
-|---|---|
-| S&OP cadence | Monthly cycle: demand review -> supply review -> pre-S&OP -> executive reconciliation |
-| Promotion lift | TPR/BOGO/display typically 2-5x baseline volume; must be isolated from baseline forecast |
-| Syndicated data | IRI/Circana and NielsenIQ provide category-level POS; retailer portals give account-level |
-| MAPE | Mean Absolute Percentage Error; primary forecast accuracy metric; target <25% at SKU-month |
-| Co-man scheduling | Minimum run sizes (often 500-2,000 cases), scheduling windows booked 4-8 weeks out |
-| Safety stock (perishable) | Must balance service level against shelf-life waste; dynamic SS based on demand variability and remaining shelf |
+5. **Surface cross-domain connections.** The most valuable insights come from connecting domains:
+   - Procurement + Production: Will ingredients arrive before the scheduled run?
+   - Inventory + Demand: Does days-of-supply cover the forecast horizon?
+   - Batch + Quality: Does the batch meet all release criteria?
+   - Cost + Yield: What is the dollar impact of yield loss?
+   - Logistics + Inventory: Is cold chain capacity sufficient for projected inventory?
 
-### Supplier Qualification
-| Concept | Summary |
-|---|---|
-| GFSI benchmarked | SQF, BRC, FSSC 22000, IFS — any one satisfies "GFSI certified" requirement |
-| COA requirements | Micro (APC, yeast/mold, coliforms, pathogens), chemical (Brix, pH, titratable acidity, heavy metals), physical (color, particle size), allergens |
-| Supplier scorecard | Weighted composite: Quality 40%, Delivery 25%, Cost 20%, Responsiveness 15% (typical) |
-| SCAR | Supplier Corrective Action Request — formal nonconformance process with root cause and CAPA |
-| FSMA 204 | FDA Food Traceability Rule; requires KDEs at CTEs for foods on the Food Traceability List |
-| Letters of Guarantee | Written supplier attestation of allergen-free status for specific allergens |
+## Scripts
 
-## Reference Files
+The `scripts/` directory contains Python utilities for data analysis:
 
-| File | Scope |
-|---|---|
-| `references/commodity_procurement.md` | Juice concentrates, sweeteners, flavors, packaging materials, contract structures, hedging |
-| `references/cold_chain_logistics.md` | Temperature management, warehousing, freight, pallet optimization, carrier qualification |
-| `references/demand_planning.md` | Forecasting methods, S&OP, promotion modeling, co-man capacity, inventory classification |
-| `references/supplier_qualification.md` | Approved supplier programs, audits, COAs, scorecards, FSMA 204 traceability |
-
-## Usage Pattern
-
-1. Identify which domain area the user's question falls into
-2. Load the relevant reference file(s)
-3. Apply the domain knowledge to the user's specific operational context
-4. Provide actionable guidance grounded in F&B industry norms, not generic supply chain theory
-
-## Industry Context
-
-This knowledge base is calibrated for:
-- **Company size**: Emerging to mid-scale CPG brands ($5M-$200M revenue)
-- **Production model**: Primarily co-manufactured (co-pack/co-man), with some owned production
-- **Channels**: Retail (grocery, natural, mass), e-commerce/DTC, foodservice
-- **Product types**: Refrigerated and shelf-stable beverages, functional foods
-- **Geography**: US-centric supply chain with global ingredient sourcing
+- **`scripts/fb_analyzer.py`** — Data loading, cleaning, KPI calculations, and chart generation
+- **`scripts/forecast_engine.py`** — Demand forecasting with seasonality and promo lift
+- **`scripts/recipe_calculator.py`** — BOM explosion, scaling, costing, nutritional calculations
+- **`scripts/shelf_life_tracker.py`** — Shelf-life analysis, FEFO compliance, waste forecasting

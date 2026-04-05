@@ -1,0 +1,23 @@
+{
+  "skill_name": "bill-com-autonomi",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We just onboarded a new ingredient supplier for our beverage line — Pacific Coast Citrus. They sent us their first invoice (#PCC-2026-0031) for $8,400 worth of orange oil concentrate. I need to set up the approval chain in BILL.com so our Procurement agent verifies the PO match first, then Quality checks the COA, and finally AP gives the green light. Can you write the script to do this using the Autonomi BILL.com integration?",
+      "expected_output": "A Python script that uses BillSession and ApprovalChain to authenticate, locate the bill (by invoice number or list unassigned bills), and call set_approvers or set_default_chain with the correct 3-step Procurement -> Quality -> AP sequence. Should include error handling and logging.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Our QA agent just flagged invoice #INV-7892 from Midwest Grain Co — the COA shows protein content at 11.2% but our spec requires minimum 12%. The bill is currently sitting at step 2 in the approval chain (Quality review). I need to reject this bill and make sure the Procurement agent and our AP team get notified about the hold. Show me how to handle this rejection using the BILL.com Autonomi skill.",
+      "expected_output": "Code that uses ApprovalChain.reject_bill() with a clear reason string referencing the COA mismatch, logs the rejection, and demonstrates the notification pattern (even if the actual notification channel is mocked). Should NOT call approve_bill. Should reference the correct approval status handling for a mid-chain rejection.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I need to build a daily sync job for our Autonomi deployment that checks BILL.com every morning at 6am, pulls all bills currently in the approval pipeline, and generates a status report showing: how many bills are unassigned, how many are mid-approval, any that were denied, and any that have been stuck in the same status for more than 3 days. This is for our AP dashboard. Write the full script.",
+      "expected_output": "A comprehensive script that uses BillSession and ApprovalStatusSync to poll BILL.com, track status over time, detect stale bills (>3 days in same state), and produce a structured status report (JSON or formatted text). Should demonstrate proper session management, pagination awareness for large bill volumes, and clear output formatting suitable for a dashboard.",
+      "files": []
+    }
+  ]
+}
