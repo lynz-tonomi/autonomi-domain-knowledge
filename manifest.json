@@ -1,7 +1,7 @@
 {
   "name": "autonomi-domain-knowledge",
   "description": "Consolidated knowledge base for all Autonomi agents — domain expertise, platform skills, and lab workflows",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "agents": ["LynZ (Dashboard)", "LynZ (Formulation Lab)"],
   "domains": {
     "shared": {
@@ -26,6 +26,11 @@
           "id": "fb-product-dev",
           "name": "F&B Product Development",
           "description": "Stage-gate NPD, formulation scale-up, packaging, regulatory claims, timeline templates"
+        },
+        {
+          "id": "fb-organic-certifications",
+          "name": "F&B Organic & Specialty Certifications",
+          "description": "USDA Organic (NOP), EU Organic, Non-GMO Project, Kosher, Halal, Gluten-Free, Fair Trade, Rainforest Alliance, B Corp, Clean Label, SQF, BRC, FSSC 22000, GFSI schemes, stage-gate certification project management"
         },
         {
           "id": "qbo-autonomi",
